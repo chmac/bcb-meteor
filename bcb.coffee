@@ -25,6 +25,11 @@ if Meteor.isClient
     init = new Switchery elem,
       secondaryColor: 'red'
 
+  Template.open.open = ->
+    log = Log.findOne {}, sort: [['when'], ['desc']]
+    log?.open
+
   Template.open.events
     'change input#open': (event) ->
       Log.insert open: event.target.checked
+      
