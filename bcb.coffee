@@ -15,10 +15,20 @@ Log.allow
   remove: ->
     false
 
+if Meteor.isServer
+  Meteor.publish 'logs', ->
+    Log.find()
+    #Log.find {}, sort: [['when'], ['desc']]
+
 if Meteor.isClient
+  
+  logsSubscription = Meteor.subscribe 'logs'
 
   Accounts.ui.config
     passwordSignupFields: 'USERNAME_AND_EMAIL'
+
+  Template.openWrapper.ready = ->
+    logsSubscription.ready()
 
   Template.open.rendered = ->
     elem = document.querySelector '.js-switch'
@@ -32,4 +42,3 @@ if Meteor.isClient
   Template.open.events
     'change input#open': (event) ->
       Log.insert open: event.target.checked
-      

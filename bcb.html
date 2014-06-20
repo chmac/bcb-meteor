@@ -3,10 +3,18 @@
 </head>
 
 <body>
-  <div id="openWrapper">{{> open}}</div>
+  <div id="openWrapper">{{> openWrapper}}</div>
   <div id="login">{{> loginButtons}}</div>
 </body>
 
+<template name="openWrapper">
+  {{#if ready}}
+    {{> open}}
+  {{else}}
+    loading...
+  {{/if}}
+</template>
+
 <template name="open">
-  <input type="checkbox" id="open" class="js-switch" value="open" checked={{open}} >
+    <input type="checkbox" id="open" class="js-switch" value="open" checked={{open}} >
 </template>
