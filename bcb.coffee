@@ -22,23 +22,30 @@ if Meteor.isServer
 
 if Meteor.isClient
   
+  switcher = null
+  
   logsSubscription = Meteor.subscribe 'logs'
-
+  
   Accounts.ui.config
     passwordSignupFields: 'USERNAME_AND_EMAIL'
-
+  
   Template.openWrapper.ready = ->
     logsSubscription.ready()
-
+  
   Template.open.rendered = ->
-    elem = document.querySelector '.js-switch'
-    init = new Switchery elem,
-      secondaryColor: 'red'
-
+    Deps.autorun (c)->
+      # This is only to establish the dependency, maybe a better way?
+      log = Log.findOne {}, sort: [['when', 'desc']]
+      # Remove the existing switcher if it exists
+      switcher?.switcher?.remove()
+      elem = document.querySelector '.js-switch'
+      switcher = new Switchery elem,
+        secondaryColor: 'red'
+  
   Template.open.open = ->
     log = Log.findOne {}, sort: [['when', 'desc']]
     log?.open
-
+  
   Template.open.events
     'change input#open': (event) ->
       Log.insert open: event.target.checked
