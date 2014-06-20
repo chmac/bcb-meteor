@@ -3,11 +3,10 @@
 </head>
 
 <body>
-  {{> hello}}
+  <div id="open">{{> open}}</div>
+  <div id="login">{{> loginButtons}}</div>
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="open">
+  <input type="checkbox" class="js-switch" value="open" >
 </template>
