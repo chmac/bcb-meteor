@@ -26,7 +26,7 @@ if Meteor.isClient
       secondaryColor: 'red'
 
   Template.open.open = ->
-    log = Log.findOne {}, sort: [['when'], ['desc']]
+    log = Log.findOne {}, sort: [['when', 'desc']]
     log?.open
 
   Template.open.events
