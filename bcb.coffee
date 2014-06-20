@@ -16,9 +16,15 @@ Log.allow
     false
 
 if Meteor.isClient
+
   Accounts.ui.config
     passwordSignupFields: 'USERNAME_AND_EMAIL'
+
   Template.open.rendered = ->
     elem = document.querySelector '.js-switch'
     init = new Switchery elem,
       secondaryColor: 'red'
+
+  Template.open.events
+    'change input#open': (event) ->
+      Log.insert open: event.target.checked
